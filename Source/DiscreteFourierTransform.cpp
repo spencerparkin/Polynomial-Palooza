@@ -76,6 +76,11 @@ FFT::FFT()
 
 /*virtual*/ bool FFT::FromPolynomial(const Polynomial& polynomial, std::string& error)
 {
+	return this->FFT_Internal(polynomial, false, error);
+}
+
+bool FFT::FFT_Internal(const Polynomial& polynomial, bool inverse, std::string& error)
+{
 	this->pointArray.clear();
 
 	uint32_t degreeBound = polynomial.GetDegreeBound();
@@ -114,8 +119,13 @@ FFT::FFT()
 	{
 		ComplexNumber rootOfUnity;
 		rootOfUnity.ExpI(2.0 * M_PI * double(i) / double(degreeBound));
+		if (inverse)
+			rootOfUnity = rootOfUnity.Inverse();
 		uint32_t j = i % (degreeBound / 2);
-		this->pointArray.push_back(evenFft.pointArray[j] + rootOfUnity * oddFft.pointArray[j]);
+		ComplexNumber point = evenFft.pointArray[j] + rootOfUnity * oddFft.pointArray[j];
+		if (inverse)
+			point = point / double(degreeBound);
+		this->pointArray.push_back(point);
 	}
 
 	return true;
@@ -123,6 +133,22 @@ FFT::FFT()
 
 /*virtual*/ bool FFT::ToPolynomial(Polynomial& polynomial, std::string& error) const
 {
-	error = "Not yet implimented.";
-	return false;
+	// In practice, it may have just been better to use the
+	// same class to represent the DFT and the polynomial.
+
+	Polynomial fftAsPoly;
+
+	for (const ComplexNumber& point : this->pointArray)
+		fftAsPoly.coefficientArray.push_back(point);
+
+	FFT polyAsFft;
+
+	if (!polyAsFft.FFT_Internal(fftAsPoly, true, error))
+		return false;
+
+	polynomial.coefficientArray.clear();
+	for (const ComplexNumber& coefficient : polyAsFft.pointArray)
+		polynomial.coefficientArray.push_back(coefficient);
+
+	return true;
 }

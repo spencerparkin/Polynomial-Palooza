@@ -142,7 +142,7 @@ void Polynomial::FastMultiply(const Polynomial& polynomialA, const Polynomial& p
 
 	fft.Multiply(fftA, fftB);
 
-	fft.FromPolynomial(*this, error);
+	fft.ToPolynomial(*this, error);
 }
 
 Polynomial operator+(const Polynomial& polynomialA, const Polynomial& polynomialB)

@@ -32,4 +32,7 @@ public:
 
 	virtual bool FromPolynomial(const Polynomial& polynomial, std::string& error) override;
 	virtual bool ToPolynomial(Polynomial& polynomial, std::string& error) const override;
+
+private:
+	bool FFT_Internal(const Polynomial& polynomial, bool inverse, std::string& error);
 };
