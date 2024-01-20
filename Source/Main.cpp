@@ -18,6 +18,10 @@ int main(int argc, char** argv)
 	std::cout << "Polynomial A: " << std::string(polynomialA) << std::endl;
 	std::cout << "Polynomial B: " << std::string(polynomialB) << std::endl;
 
+	std::cout << std::endl;
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << std::endl;
+
 	Polynomial product = polynomialA * polynomialB;
 
 	std::cout << "Product: " << std::string(product) << std::endl;
@@ -41,6 +45,18 @@ int main(int argc, char** argv)
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << std::endl;
 
+	Polynomial invDftA, invDftB;
+
+	invDftA.DFT(dftA, true);
+	invDftB.DFT(dftB, true);
+
+	std::cout << "inv-DFT A: " << std::string(invDftA) << std::endl;
+	std::cout << "inv-DFT B: " << std::string(invDftB) << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << std::endl;
+
 	Polynomial fftA, fftB;
 
 	fftA.FFT(polynomialA, false);
@@ -48,6 +64,18 @@ int main(int argc, char** argv)
 
 	std::cout << "FFT A: " << std::string(fftA) << std::endl;
 	std::cout << "FFT B: " << std::string(fftB) << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << std::endl;
+
+	Polynomial invFftA, invFftB;
+
+	invFftA.FFT(fftA, true);
+	invFftB.FFT(fftB, true);
+
+	std::cout << "inv-DFT A: " << std::string(invFftA) << std::endl;
+	std::cout << "inv-DFT B: " << std::string(invFftB) << std::endl;
 
 	/*
 	std::cout << std::endl;
