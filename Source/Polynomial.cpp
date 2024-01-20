@@ -170,7 +170,6 @@ bool Polynomial::DFT(const Polynomial& polynomial, bool inverse)
 	return true;
 }
 
-// TODO: The inverse version of this is wrong and needs to be fixed.
 bool Polynomial::FFT(const Polynomial& polynomial, bool inverse, bool recursed /*= false*/)
 {
 	this->coefficientArray.clear();
