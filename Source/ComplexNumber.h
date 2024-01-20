@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class ComplexNumber
 {
 public:
@@ -15,6 +17,7 @@ public:
 	void operator/=(const ComplexNumber& complexNumber);
 	bool operator==(const ComplexNumber& complexNumber) const;
 	bool operator!=(const ComplexNumber& complexNumber) const;
+	operator std::string() const;
 
 	void Exp(const ComplexNumber& complexNumber);
 	void Exp(double realNumber);

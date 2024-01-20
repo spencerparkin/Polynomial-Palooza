@@ -1,5 +1,6 @@
 #include "Polynomial.h"
 #include <algorithm>
+#include <format>
 
 Polynomial::Polynomial()
 {
@@ -30,6 +31,24 @@ const ComplexNumber& Polynomial::operator[](uint32_t i) const
 ComplexNumber& Polynomial::operator[](uint32_t i)
 {
 	return this->coefficientArray[i];
+}
+
+Polynomial::operator std::string() const
+{
+	std::string polynomialStr;
+
+	uint32_t degree = this->Degree();
+	for (int32_t i = degree - 1; i >= 0; i--)
+	{
+		const ComplexNumber& coefficient = this->coefficientArray[i];
+
+		if (polynomialStr.length() > 0)
+			polynomialStr += " + ";
+
+		polynomialStr += "(" + std::string(coefficient) + ")" + std::format("x^{}", i);
+	}
+
+	return polynomialStr;
 }
 
 uint32_t Polynomial::Degree() const

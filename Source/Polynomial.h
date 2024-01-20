@@ -2,6 +2,7 @@
 
 #include "ComplexNumber.h"
 #include <vector>
+#include <string>
 
 class Polynomial
 {
@@ -13,6 +14,7 @@ public:
 	void operator=(const Polynomial& polynomial);
 	const ComplexNumber& operator[](uint32_t i) const;
 	ComplexNumber& operator[](uint32_t i);
+	operator std::string() const;
 
 	uint32_t Degree() const;
 	uint32_t GetDegreeBound() const;

@@ -1,5 +1,6 @@
 #include "ComplexNumber.h"
 #include <math.h>
+#include <format>
 
 ComplexNumber::ComplexNumber()
 {
@@ -59,6 +60,20 @@ bool ComplexNumber::operator==(const ComplexNumber& complexNumber) const
 bool ComplexNumber::operator!=(const ComplexNumber& complexNumber) const
 {
 	return this->realPart != complexNumber.realPart || this->imagPart != complexNumber.imagPart;
+}
+
+ComplexNumber::operator std::string() const
+{
+	if (this->realPart == 0.0 && this->imagPart == 0.0)
+		return std::string("0.0");
+
+	if (this->imagPart == 0.0)
+		return std::format("{}", this->realPart);
+
+	if (this->realPart == 0.0)
+		return std::format("i{}", this->imagPart);
+
+	return std::format("{} + i{}", this->realPart, this->imagPart);
 }
 
 void ComplexNumber::Exp(const ComplexNumber& complexNumber)
