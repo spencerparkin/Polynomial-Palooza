@@ -2,6 +2,7 @@
 
 #include "ComplexNumber.h"
 #include <vector>
+#include <string>
 
 class Polynomial;
 
@@ -13,8 +14,8 @@ public:
 
 	operator std::string() const;
 
-	virtual void FromPolynomial(const Polynomial& polynomial);
-	virtual void ToPolynomial(Polynomial& polynomial) const;
+	virtual bool FromPolynomial(const Polynomial& polynomial, std::string& error);
+	virtual bool ToPolynomial(Polynomial& polynomial, std::string& error) const;
 
 	// If there are N points here, then they were found by evaluating
 	// the polynomial at the N complex Nth roots of unity.
@@ -27,6 +28,6 @@ public:
 	FFT();
 	virtual ~FFT();
 
-	virtual void FromPolynomial(const Polynomial& polynomial) override;
-	virtual void ToPolynomial(Polynomial& polynomial) const override;
+	virtual bool FromPolynomial(const Polynomial& polynomial, std::string& error) override;
+	virtual bool ToPolynomial(Polynomial& polynomial, std::string& error) const override;
 };

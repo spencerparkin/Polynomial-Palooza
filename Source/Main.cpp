@@ -27,12 +27,25 @@ int main(int argc, char** argv)
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << std::endl;
 
+	std::string error;
+
 	DFT dftA, dftB;
-	dftA.FromPolynomial(polynomialA);
-	dftB.FromPolynomial(polynomialB);
+	dftA.FromPolynomial(polynomialA, error);
+	dftB.FromPolynomial(polynomialB, error);
 
 	std::cout << "DFT A: " << std::string(dftA) << std::endl;
 	std::cout << "DFT B: " << std::string(dftB) << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << std::endl;
+
+	FFT fftA, fftB;
+	fftA.FromPolynomial(polynomialA, error);
+	fftB.FromPolynomial(polynomialB, error);
+
+	std::cout << "FFT A: " << std::string(fftA) << std::endl;
+	std::cout << "FFT B: " << std::string(fftB) << std::endl;
 
 	return 0;
 }
