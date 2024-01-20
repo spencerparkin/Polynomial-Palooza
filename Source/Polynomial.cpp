@@ -1,5 +1,4 @@
 #include "Polynomial.h"
-#include "DiscreteFourierTransform.h"
 #include <algorithm>
 #include <format>
 
@@ -123,26 +122,99 @@ ComplexNumber Polynomial::Evaluate(const ComplexNumber& complexArg) const
 
 void Polynomial::FastMultiply(const Polynomial& polynomialA, const Polynomial& polynomialB)
 {
-	uint32_t degreeA = polynomialA.Degree();
-	uint32_t degreeB = polynomialB.Degree();
+	uint32_t maxDegree = std::max(polynomialA.Degree(), polynomialB.Degree());
+	uint32_t degreeBound = 2 * SmallestPowerOfTwoGreaterThanOrEqualTo(maxDegree);
 
-	uint32_t degreeBoundA = 2 * SmallestPowerOfTwoGreaterThanOrEqualTo(degreeA);
-	uint32_t degreeBoundB = 2 * SmallestPowerOfTwoGreaterThanOrEqualTo(degreeB);
+	polynomialA.SetDegreeBound(degreeBound);
+	polynomialB.SetDegreeBound(degreeBound);
 
-	polynomialA.SetDegreeBound(degreeBoundA);
-	polynomialB.SetDegreeBound(degreeBoundB);
+	Polynomial dftA, dftB;
 
-	FFT fftA, fftB;
-	std::string error;
+//#define USE_FFT
 
-	fftA.FromPolynomial(polynomialA, error);
-	fftB.FromPolynomial(polynomialB, error);
+#if defined USE_FFT
+	dftA.FFT(polynomialA, false);
+	dftB.FFT(polynomialA, false);
+#else
+	dftA.DFT(polynomialA, false);
+	dftB.DFT(polynomialB, false);
+#endif
 
-	FFT fft;
+	Polynomial dftProduct;
+	for (uint32_t i = 0; i < degreeBound; i++)
+		dftProduct[i] = dftA[i] * dftB[i];
 
-	fft.Multiply(fftA, fftB);
+#if defined USE_FFT
+	dftProduct.FFT(*this, true);
+#else
+	dftProduct.DFT(*this, true);
+#endif
+}
 
-	fft.ToPolynomial(*this, error);
+bool Polynomial::DFT(const Polynomial& polynomial, bool inverse)
+{
+	uint32_t degreeBound = polynomial.GetDegreeBound();
+	this->coefficientArray.clear();
+
+	for (uint32_t i = 0; i < degreeBound; i++)
+	{
+		ComplexNumber rootOfUnity;
+		rootOfUnity.ExpI((inverse ? -1.0 : 1.0) * 2.0 * M_PI * double(i) / double(degreeBound));
+		ComplexNumber coefficient = polynomial.Evaluate(rootOfUnity);
+		if (inverse)
+			coefficient /= double(degreeBound);
+		this->coefficientArray.push_back(coefficient);
+	}
+
+	return true;
+}
+
+// TODO: The inverse version of this is wrong and needs to be fixed.
+bool Polynomial::FFT(const Polynomial& polynomial, bool inverse)
+{
+	this->coefficientArray.clear();
+
+	uint32_t degreeBound = polynomial.GetDegreeBound();
+	if (degreeBound == 1)
+	{
+		this->coefficientArray.push_back(polynomial[0]);
+		return true;
+	}
+
+	if (degreeBound % 2 != 0)
+		return false;
+
+	Polynomial evenPoly, oddPoly;
+
+	for (uint32_t i = 0; i < degreeBound; i++)
+	{
+		const ComplexNumber& coefficient = polynomial[i];
+		if (i % 2 == 0)
+			evenPoly.coefficientArray.push_back(coefficient);
+		else
+			oddPoly.coefficientArray.push_back(coefficient);
+	}
+
+	Polynomial evenFFT, oddFFT;
+
+	if (!evenFFT.FFT(evenPoly, inverse))
+		return false;
+
+	if (!oddFFT.FFT(oddPoly, inverse))
+		return false;
+
+	for (uint32_t i = 0; i < degreeBound; i++)
+	{
+		ComplexNumber rootOfUnity;
+		rootOfUnity.ExpI((inverse ? -1.0 : 1.0) * 2.0 * M_PI * double(i) / double(degreeBound));
+		uint32_t j = i % (degreeBound / 2);
+		ComplexNumber coefficient = evenFFT.coefficientArray[j] + rootOfUnity * oddFFT.coefficientArray[j];
+		if (inverse)
+			coefficient /= double(degreeBound);
+		this->coefficientArray.push_back(coefficient);
+	}
+
+	return true;
 }
 
 Polynomial operator+(const Polynomial& polynomialA, const Polynomial& polynomialB)
@@ -176,11 +248,7 @@ Polynomial operator-(const Polynomial& polynomialA, const Polynomial& polynomial
 Polynomial operator*(const Polynomial& polynomialA, const Polynomial& polynomialB)
 {
 	Polynomial product;
-
-	uint32_t maxDegree = std::max(polynomialA.Degree(), polynomialB.Degree());
-	product.SetDegreeBound(2 * maxDegree);
-	polynomialA.SetDegreeBound(maxDegree);
-	polynomialB.SetDegreeBound(maxDegree);
+	product.SetDegreeBound(polynomialA.Degree() + polynomialB.Degree());
 
 	// This is the naive method of polynomial multiplication.  A goal of this
 	// program is to see if we can do this in O(N ln N) time using an FFT.

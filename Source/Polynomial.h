@@ -21,6 +21,9 @@ public:
 	void SetDegreeBound(uint32_t degreeBound) const;
 	void SetDegreeBound(uint32_t degreeBound);
 
+	bool DFT(const Polynomial& polynomial, bool inverse);
+	bool FFT(const Polynomial& polynomial, bool inverse);
+
 	void FastMultiply(const Polynomial& polynomialA, const Polynomial& polynomialB);
 
 	static uint32_t SmallestPowerOfTwoGreaterThanOrEqualTo(uint32_t givenInt);

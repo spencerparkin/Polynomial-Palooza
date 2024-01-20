@@ -132,12 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\ComplexNumber.h" />
-    <ClInclude Include="Source\DiscreteFourierTransform.h" />
     <ClInclude Include="Source\Polynomial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\ComplexNumber.cpp" />
-    <ClCompile Include="Source\DiscreteFourierTransform.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Polynomial.cpp" />
   </ItemGroup>

@@ -15,6 +15,10 @@ public:
 	void operator-=(const ComplexNumber& complexNumber);
 	void operator*=(const ComplexNumber& complexNumber);
 	void operator/=(const ComplexNumber& complexNumber);
+	void operator+=(double realNumber);
+	void operator-=(double realNumber);
+	void operator*=(double realNumber);
+	void operator/=(double realNumber);
 	bool operator==(const ComplexNumber& complexNumber) const;
 	bool operator!=(const ComplexNumber& complexNumber) const;
 	operator std::string() const;

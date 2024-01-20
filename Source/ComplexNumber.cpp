@@ -52,6 +52,28 @@ void ComplexNumber::operator/=(const ComplexNumber& complexNumber)
 	*this = *this / complexNumber;
 }
 
+void ComplexNumber::operator+=(double realNumber)
+{
+	this->realPart += realNumber;
+}
+
+void ComplexNumber::operator-=(double realNumber)
+{
+	this->realPart -= realNumber;
+}
+
+void ComplexNumber::operator*=(double realNumber)
+{
+	this->realPart *= realNumber;
+	this->imagPart *= realNumber;
+}
+
+void ComplexNumber::operator/=(double realNumber)
+{
+	this->realPart /= realNumber;
+	this->imagPart /= realNumber;
+}
+
 bool ComplexNumber::operator==(const ComplexNumber& complexNumber) const
 {
 	return this->realPart == complexNumber.realPart && this->imagPart == complexNumber.imagPart;

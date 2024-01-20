@@ -13,9 +13,6 @@
     <ClInclude Include="Source\Polynomial.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DiscreteFourierTransform.h">
-      <Filter>Source</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\ComplexNumber.cpp">
@@ -25,9 +22,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Polynomial.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\DiscreteFourierTransform.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,5 @@
 #include "ComplexNumber.h"
 #include "Polynomial.h"
-#include "DiscreteFourierTransform.h"
 #include <iostream>
 
 int main(int argc, char** argv)
@@ -27,11 +26,13 @@ int main(int argc, char** argv)
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << std::endl;
 
-	std::string error;
+	polynomialA.SetDegreeBound(4);
+	polynomialB.SetDegreeBound(4);
 
-	DFT dftA, dftB;
-	dftA.FromPolynomial(polynomialA, error);
-	dftB.FromPolynomial(polynomialB, error);
+	Polynomial dftA, dftB;
+
+	dftA.DFT(polynomialA, false);
+	dftB.DFT(polynomialB, false);
 
 	std::cout << "DFT A: " << std::string(dftA) << std::endl;
 	std::cout << "DFT B: " << std::string(dftB) << std::endl;
@@ -40,13 +41,15 @@ int main(int argc, char** argv)
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << std::endl;
 
-	FFT fftA, fftB;
-	fftA.FromPolynomial(polynomialA, error);
-	fftB.FromPolynomial(polynomialB, error);
+	Polynomial fftA, fftB;
+
+	fftA.FFT(polynomialA, false);
+	fftB.FFT(polynomialB, false);
 
 	std::cout << "FFT A: " << std::string(fftA) << std::endl;
 	std::cout << "FFT B: " << std::string(fftB) << std::endl;
 
+	/*
 	std::cout << std::endl;
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << std::endl;
@@ -56,6 +59,7 @@ int main(int argc, char** argv)
 	fastProduct.FastMultiply(polynomialA, polynomialB);
 
 	std::cout << "Fast product: " << std::string(fastProduct) << std::endl;
+	*/
 
 	return 0;
 }
