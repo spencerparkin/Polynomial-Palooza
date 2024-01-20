@@ -134,7 +134,7 @@ void Polynomial::FastMultiply(const Polynomial& polynomialA, const Polynomial& p
 
 #if defined USE_FFT
 	dftA.FFT(polynomialA, false);
-	dftB.FFT(polynomialA, false);
+	dftB.FFT(polynomialB, false);
 #else
 	dftA.DFT(polynomialA, false);
 	dftB.DFT(polynomialB, false);
