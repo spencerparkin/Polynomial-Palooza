@@ -118,13 +118,9 @@ bool FFT::FFT_Internal(const Polynomial& polynomial, bool inverse, std::string& 
 	for (uint32_t i = 0; i < degreeBound; i++)
 	{
 		ComplexNumber rootOfUnity;
-		rootOfUnity.ExpI(2.0 * M_PI * double(i) / double(degreeBound));
-		if (inverse)
-			rootOfUnity = rootOfUnity.Inverse();
+		rootOfUnity.ExpI((inverse ? -1.0 : 1.0) * 2.0 * M_PI * double(i) / double(degreeBound));
 		uint32_t j = i % (degreeBound / 2);
 		ComplexNumber point = evenFft.pointArray[j] + rootOfUnity * oddFft.pointArray[j];
-		if (inverse)
-			point = point / double(degreeBound);
 		this->pointArray.push_back(point);
 	}
 
@@ -148,7 +144,7 @@ bool FFT::FFT_Internal(const Polynomial& polynomial, bool inverse, std::string& 
 
 	polynomial.coefficientArray.clear();
 	for (const ComplexNumber& coefficient : polyAsFft.pointArray)
-		polynomial.coefficientArray.push_back(coefficient);
+		polynomial.coefficientArray.push_back(coefficient / double(this->pointArray.size()));
 
 	return true;
 }
