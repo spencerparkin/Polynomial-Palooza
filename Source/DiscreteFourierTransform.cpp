@@ -46,7 +46,7 @@ DFT::operator std::string() const
 
 /*virtual*/ bool DFT::ToPolynomial(Polynomial& polynomial, std::string& error) const
 {
-	// Crap.  Here we need to invert an NxN Vandermonde matrix.  :/
+	// TODO: I know how to write this now, so do it.  Test polynomial fast multiply with this instead of FFT.
 	error = "Not yet implimented.";
 	return false;
 }
