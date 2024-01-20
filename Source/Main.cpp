@@ -77,7 +77,6 @@ int main(int argc, char** argv)
 	std::cout << "inv-DFT A: " << std::string(invFftA) << std::endl;
 	std::cout << "inv-DFT B: " << std::string(invFftB) << std::endl;
 
-	/*
 	std::cout << std::endl;
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << std::endl;
@@ -87,7 +86,6 @@ int main(int argc, char** argv)
 	fastProduct.FastMultiply(polynomialA, polynomialB);
 
 	std::cout << "Fast product: " << std::string(fastProduct) << std::endl;
-	*/
 
 	return 0;
 }

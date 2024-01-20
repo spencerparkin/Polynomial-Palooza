@@ -141,13 +141,14 @@ void Polynomial::FastMultiply(const Polynomial& polynomialA, const Polynomial& p
 #endif
 
 	Polynomial dftProduct;
+	dftProduct.SetDegreeBound(degreeBound);
 	for (uint32_t i = 0; i < degreeBound; i++)
 		dftProduct[i] = dftA[i] * dftB[i];
 
 #if defined USE_FFT
-	dftProduct.FFT(*this, true);
+	this->FFT(dftProduct, true);
 #else
-	dftProduct.DFT(*this, true);
+	this->DFT(dftProduct, true);
 #endif
 }
 
@@ -170,7 +171,7 @@ bool Polynomial::DFT(const Polynomial& polynomial, bool inverse)
 }
 
 // TODO: The inverse version of this is wrong and needs to be fixed.
-bool Polynomial::FFT(const Polynomial& polynomial, bool inverse)
+bool Polynomial::FFT(const Polynomial& polynomial, bool inverse, bool recursed /*= false*/)
 {
 	this->coefficientArray.clear();
 
@@ -197,10 +198,10 @@ bool Polynomial::FFT(const Polynomial& polynomial, bool inverse)
 
 	Polynomial evenFFT, oddFFT;
 
-	if (!evenFFT.FFT(evenPoly, inverse))
+	if (!evenFFT.FFT(evenPoly, inverse, true))
 		return false;
 
-	if (!oddFFT.FFT(oddPoly, inverse))
+	if (!oddFFT.FFT(oddPoly, inverse, true))
 		return false;
 
 	for (uint32_t i = 0; i < degreeBound; i++)
@@ -209,7 +210,7 @@ bool Polynomial::FFT(const Polynomial& polynomial, bool inverse)
 		rootOfUnity.ExpI((inverse ? -1.0 : 1.0) * 2.0 * M_PI * double(i) / double(degreeBound));
 		uint32_t j = i % (degreeBound / 2);
 		ComplexNumber coefficient = evenFFT.coefficientArray[j] + rootOfUnity * oddFFT.coefficientArray[j];
-		if (inverse)
+		if (!recursed && inverse)
 			coefficient /= double(degreeBound);
 		this->coefficientArray.push_back(coefficient);
 	}

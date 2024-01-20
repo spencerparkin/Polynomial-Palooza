@@ -22,7 +22,7 @@ public:
 	void SetDegreeBound(uint32_t degreeBound);
 
 	bool DFT(const Polynomial& polynomial, bool inverse);
-	bool FFT(const Polynomial& polynomial, bool inverse);
+	bool FFT(const Polynomial& polynomial, bool inverse, bool recursed = false);
 
 	void FastMultiply(const Polynomial& polynomialA, const Polynomial& polynomialB);
 
