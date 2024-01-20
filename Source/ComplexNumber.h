@@ -9,6 +9,12 @@ public:
 	virtual ~ComplexNumber();
 
 	void operator=(const ComplexNumber& complexNumber);
+	void operator+=(const ComplexNumber& complexNumber);
+	void operator-=(const ComplexNumber& complexNumber);
+	void operator*=(const ComplexNumber& complexNumber);
+	void operator/=(const ComplexNumber& complexNumber);
+	bool operator==(const ComplexNumber& complexNumber) const;
+	bool operator!=(const ComplexNumber& complexNumber) const;
 
 	void Exp(const ComplexNumber& complexNumber);
 	void Exp(double realNumber);

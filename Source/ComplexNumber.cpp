@@ -29,6 +29,38 @@ void ComplexNumber::operator=(const ComplexNumber& complexNumber)
 	this->imagPart = complexNumber.imagPart;
 }
 
+void ComplexNumber::operator+=(const ComplexNumber& complexNumber)
+{
+	this->realPart += complexNumber.realPart;
+	this->imagPart += complexNumber.imagPart;
+}
+
+void ComplexNumber::operator-=(const ComplexNumber& complexNumber)
+{
+	this->realPart -= complexNumber.realPart;
+	this->imagPart -= complexNumber.imagPart;
+}
+
+void ComplexNumber::operator*=(const ComplexNumber& complexNumber)
+{
+	*this = *this * complexNumber;
+}
+
+void ComplexNumber::operator/=(const ComplexNumber& complexNumber)
+{
+	*this = *this / complexNumber;
+}
+
+bool ComplexNumber::operator==(const ComplexNumber& complexNumber) const
+{
+	return this->realPart == complexNumber.realPart && this->imagPart == complexNumber.imagPart;
+}
+
+bool ComplexNumber::operator!=(const ComplexNumber& complexNumber) const
+{
+	return this->realPart != complexNumber.realPart || this->imagPart != complexNumber.imagPart;
+}
+
 void ComplexNumber::Exp(const ComplexNumber& complexNumber)
 {
 	double scale = ::exp(complexNumber.realPart);
