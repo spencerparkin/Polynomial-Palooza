@@ -1,5 +1,6 @@
 #include "ComplexNumber.h"
 #include "Polynomial.h"
+#include "DiscreteFourierTransform.h"
 #include <iostream>
 
 int main(int argc, char** argv)
@@ -21,6 +22,17 @@ int main(int argc, char** argv)
 	Polynomial product = polynomialA * polynomialB;
 
 	std::cout << "Product: " << std::string(product) << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << std::endl;
+
+	DFT dftA, dftB;
+	dftA.FromPolynomial(polynomialA);
+	dftB.FromPolynomial(polynomialB);
+
+	std::cout << "DFT A: " << std::string(dftA) << std::endl;
+	std::cout << "DFT B: " << std::string(dftB) << std::endl;
 
 	return 0;
 }

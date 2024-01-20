@@ -68,12 +68,12 @@ ComplexNumber::operator std::string() const
 		return std::string("0.0");
 
 	if (this->imagPart == 0.0)
-		return std::format("{}", this->realPart);
+		return std::format("{:.4f}", this->realPart);
 
 	if (this->realPart == 0.0)
-		return std::format("i{}", this->imagPart);
+		return std::format("i{:.4f}", this->imagPart);
 
-	return std::format("{} + i{}", this->realPart, this->imagPart);
+	return std::format("{:.4f} + {:.4f}*i", this->realPart, this->imagPart);
 }
 
 void ComplexNumber::Exp(const ComplexNumber& complexNumber)
