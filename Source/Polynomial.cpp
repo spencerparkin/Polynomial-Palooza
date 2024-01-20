@@ -130,7 +130,7 @@ void Polynomial::FastMultiply(const Polynomial& polynomialA, const Polynomial& p
 
 	Polynomial dftA, dftB;
 
-//#define USE_FFT
+#define USE_FFT
 
 #if defined USE_FFT
 	dftA.FFT(polynomialA, false);
