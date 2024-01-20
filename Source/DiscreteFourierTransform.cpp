@@ -51,6 +51,19 @@ DFT::operator std::string() const
 	return false;
 }
 
+bool DFT::Multiply(const DFT& dftA, const DFT& dftB)
+{
+	if (dftA.pointArray.size() != dftB.pointArray.size())
+		return false;
+
+	this->pointArray.clear();
+
+	for (uint32_t i = 0; i < dftA.pointArray.size(); i++)
+		this->pointArray.push_back(dftA.pointArray[i] * dftB.pointArray[i]);
+
+	return true;
+}
+
 //----------------------------- FFT -----------------------------
 
 FFT::FFT()

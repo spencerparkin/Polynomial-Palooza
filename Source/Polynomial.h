@@ -21,6 +21,10 @@ public:
 	void SetDegreeBound(uint32_t degreeBound) const;
 	void SetDegreeBound(uint32_t degreeBound);
 
+	void FastMultiply(const Polynomial& polynomialA, const Polynomial& polynomialB);
+
+	static uint32_t SmallestPowerOfTwoGreaterThanOrEqualTo(uint32_t givenInt);
+
 	ComplexNumber Evaluate(const ComplexNumber& complexArg) const;
 
 	std::vector<ComplexNumber> coefficientArray;

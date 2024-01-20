@@ -47,5 +47,15 @@ int main(int argc, char** argv)
 	std::cout << "FFT A: " << std::string(fftA) << std::endl;
 	std::cout << "FFT B: " << std::string(fftB) << std::endl;
 
+	std::cout << std::endl;
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << std::endl;
+
+	Polynomial fastProduct;
+
+	fastProduct.FastMultiply(polynomialA, polynomialB);
+
+	std::cout << "Fast product: " << std::string(fastProduct) << std::endl;
+
 	return 0;
 }

@@ -1,4 +1,5 @@
 #include "Polynomial.h"
+#include "DiscreteFourierTransform.h"
 #include <algorithm>
 #include <format>
 
@@ -106,6 +107,42 @@ ComplexNumber Polynomial::Evaluate(const ComplexNumber& complexArg) const
 	}
 
 	return result;
+}
+
+/*static*/ uint32_t Polynomial::SmallestPowerOfTwoGreaterThanOrEqualTo(uint32_t givenInt)
+{
+	if (givenInt == 0 || (givenInt & (givenInt - 1)) == 0)
+		return givenInt;
+
+	uint32_t powerOfTwo = 1;
+	while (powerOfTwo < givenInt)
+		powerOfTwo <<= 1;
+
+	return powerOfTwo;
+}
+
+void Polynomial::FastMultiply(const Polynomial& polynomialA, const Polynomial& polynomialB)
+{
+	uint32_t degreeA = polynomialA.Degree();
+	uint32_t degreeB = polynomialB.Degree();
+
+	uint32_t degreeBoundA = 2 * SmallestPowerOfTwoGreaterThanOrEqualTo(degreeA);
+	uint32_t degreeBoundB = 2 * SmallestPowerOfTwoGreaterThanOrEqualTo(degreeB);
+
+	polynomialA.SetDegreeBound(degreeBoundA);
+	polynomialB.SetDegreeBound(degreeBoundB);
+
+	FFT fftA, fftB;
+	std::string error;
+
+	fftA.FromPolynomial(polynomialA, error);
+	fftB.FromPolynomial(polynomialB, error);
+
+	FFT fft;
+
+	fft.Multiply(fftA, fftB);
+
+	fft.FromPolynomial(*this, error);
 }
 
 Polynomial operator+(const Polynomial& polynomialA, const Polynomial& polynomialB)

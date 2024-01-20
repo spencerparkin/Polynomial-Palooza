@@ -17,6 +17,8 @@ public:
 	virtual bool FromPolynomial(const Polynomial& polynomial, std::string& error);
 	virtual bool ToPolynomial(Polynomial& polynomial, std::string& error) const;
 
+	bool Multiply(const DFT& dftA, const DFT& dftB);
+
 	// If there are N points here, then they were found by evaluating
 	// the polynomial at the N complex Nth roots of unity.
 	std::vector<ComplexNumber> pointArray;
