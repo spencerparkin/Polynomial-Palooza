@@ -218,6 +218,30 @@ bool Polynomial::FFT(const Polynomial& polynomial, bool inverse, bool recursed /
 	return true;
 }
 
+void Polynomial::Trim()
+{
+	constexpr double eps = 1e-5;
+
+	for (ComplexNumber& complexNumber : this->coefficientArray)
+	{
+		if (::fabs(complexNumber.realPart) < eps)
+			complexNumber.realPart = 0.0;
+
+		if (::fabs(complexNumber.imagPart) < eps)
+			complexNumber.imagPart = 0.0;
+	}
+
+	while (this->coefficientArray.size() > 1)
+	{
+		ComplexNumber& complexNumber = this->coefficientArray[this->coefficientArray.size() - 1];
+		double squareMag = complexNumber.SquareMagnitude();
+		if (squareMag < eps)
+			this->coefficientArray.pop_back();
+		else
+			break;
+	}
+}
+
 Polynomial operator+(const Polynomial& polynomialA, const Polynomial& polynomialB)
 {
 	Polynomial sum;

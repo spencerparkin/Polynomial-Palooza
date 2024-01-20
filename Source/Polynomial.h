@@ -30,6 +30,8 @@ public:
 
 	ComplexNumber Evaluate(const ComplexNumber& complexArg) const;
 
+	void Trim();
+
 	std::vector<ComplexNumber> coefficientArray;
 };
 

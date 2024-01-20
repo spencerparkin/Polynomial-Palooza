@@ -6,6 +6,7 @@ int main(int argc, char** argv)
 {
 	Polynomial polynomialA, polynomialB;
 
+#if 0
 	polynomialA.coefficientArray.push_back(ComplexNumber(-3.0, 0.0));
 	polynomialA.coefficientArray.push_back(ComplexNumber(4.0, 0.0));
 	polynomialA.coefficientArray.push_back(ComplexNumber(-7.0, 0.0));
@@ -14,6 +15,16 @@ int main(int argc, char** argv)
 	polynomialB.coefficientArray.push_back(ComplexNumber(-9.0, 0.0));
 	polynomialB.coefficientArray.push_back(ComplexNumber(-2.0, 0.0));
 	polynomialB.coefficientArray.push_back(ComplexNumber(12.0, 0.0));
+#else
+	polynomialA.coefficientArray.push_back(ComplexNumber(-3.0, 2.0));
+	polynomialA.coefficientArray.push_back(ComplexNumber(4.0, 2.0));
+	polynomialA.coefficientArray.push_back(ComplexNumber(-7.0, -9.0));
+
+	polynomialB.coefficientArray.push_back(ComplexNumber(2.0, 1.0));
+	polynomialB.coefficientArray.push_back(ComplexNumber(-9.0, 2.0));
+	polynomialB.coefficientArray.push_back(ComplexNumber(-2.0, 9.0));
+	polynomialB.coefficientArray.push_back(ComplexNumber(12.0, -7.0));
+#endif
 
 	std::cout << "Polynomial A: " << std::string(polynomialA) << std::endl;
 	std::cout << "Polynomial B: " << std::string(polynomialB) << std::endl;
@@ -50,6 +61,9 @@ int main(int argc, char** argv)
 	invDftA.DFT(dftA, true);
 	invDftB.DFT(dftB, true);
 
+	invDftA.Trim();
+	invDftB.Trim();
+
 	std::cout << "inv-DFT A: " << std::string(invDftA) << std::endl;
 	std::cout << "inv-DFT B: " << std::string(invDftB) << std::endl;
 
@@ -74,9 +88,13 @@ int main(int argc, char** argv)
 	invFftA.FFT(fftA, true);
 	invFftB.FFT(fftB, true);
 
+	invFftA.Trim();
+	invFftB.Trim();
+
 	std::cout << "inv-DFT A: " << std::string(invFftA) << std::endl;
 	std::cout << "inv-DFT B: " << std::string(invFftB) << std::endl;
 
+	/*
 	std::cout << std::endl;
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << std::endl;
@@ -86,6 +104,7 @@ int main(int argc, char** argv)
 	fastProduct.FastMultiply(polynomialA, polynomialB);
 
 	std::cout << "Fast product: " << std::string(fastProduct) << std::endl;
+	*/
 
 	return 0;
 }
